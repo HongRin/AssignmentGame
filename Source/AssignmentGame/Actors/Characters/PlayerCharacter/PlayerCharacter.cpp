@@ -2,6 +2,8 @@
 #include "Components/MovementHelper/MovementHelperComponent.h"
 #include "Components/ZoomableSpringArm/ZoomableSpringArmComponent.h"
 #include "AnimInstance/PlayerAnimInst/PlayerAnimInst.h"
+#include "Single/GameInstance/AGGameInst.h"
+#include "Single/PlayerManager/PlayerManager.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -67,21 +69,20 @@ void APlayerCharacter::PossessedBy(AController* NewController)
 
 float APlayerCharacter::GetMaxHp()
 {
-	return 0.0f;
+	return GetManager(UPlayerManager)->GetPlayerInfo()->MaxHp;
 }
 
 float APlayerCharacter::GetHp()
 {
-	return 0.0f;
+	return GetManager(UPlayerManager)->GetPlayerInfo()->Hp;
 }
 
 void APlayerCharacter::SetHp(float value)
-{
-}
+{ GetManager(UPlayerManager)->GetPlayerInfo()->Hp -= value; }
 
 void APlayerCharacter::OnCharacterDie()
 {
-
+	
 }
 
 void APlayerCharacter::InitializePlayer()

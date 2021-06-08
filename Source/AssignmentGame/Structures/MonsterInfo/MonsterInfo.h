@@ -22,10 +22,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxHp;
 
-	// 현재 체력
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float Hp;
-
 	// 공격력
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float Atk;
