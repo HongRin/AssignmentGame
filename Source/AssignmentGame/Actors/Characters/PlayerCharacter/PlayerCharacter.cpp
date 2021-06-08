@@ -1,6 +1,7 @@
 #include "PlayerCharacter.h"
 #include "Components/MovementHelper/MovementHelperComponent.h"
 #include "Components/ZoomableSpringArm/ZoomableSpringArmComponent.h"
+#include "AnimInstance/PlayerAnimInst/PlayerAnimInst.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -98,13 +99,17 @@ void APlayerCharacter::InitializePlayer()
 		FRotator(0.0f, -90.0f, 0.0f));
 
 	GetCapsuleComponent()->SetCapsuleHalfHeight(40.0f);
+
+	static ConstructorHelpers::FClassFinder<UPlayerAnimInst> ANIM_BP_PLAYER(
+		TEXT("AnimBlueprint'/Game/Actors/PlayerCharacter/Animations/AnimBP_Player.AnimBP_Player_C'"));
+	if (ANIM_BP_PLAYER.Succeeded()) GetMesh()->SetAnimClass(ANIM_BP_PLAYER.Class);
 #pragma endregion
 
 #pragma region Component
 	MovementHelper = CreateDefaultSubobject<UMovementHelperComponent>(TEXT("MOVEMENT_HELPER"));
 	ZoomableSpringArm = CreateDefaultSubobject<UZoomableSpringArmComponent>(TEXT("ZOOMABLE_SPRING_ARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-	Camera->SetConstraintAspectRatio(true);
+	Camera->SetConstraintAspectRatio(false);
 
 	// Spring Arm Component 를 루트 컴포넌트에 추가합니다.
 	ZoomableSpringArm->SetupAttachment(GetRootComponent());
