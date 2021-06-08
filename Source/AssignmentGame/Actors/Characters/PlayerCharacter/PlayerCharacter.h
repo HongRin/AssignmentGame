@@ -9,6 +9,10 @@ class ASSIGNMENTGAME_API APlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 	
+private :
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UMovementHelperComponent* MovementHelper;
+
 public :
 	APlayerCharacter();
 
@@ -34,4 +38,11 @@ public:
 	virtual void SetHp(float value) override;
 
 	virtual void OnCharacterDie() override;
+
+private :
+	void InitializePlayer();
+
+public :
+	FORCEINLINE class UMovementHelperComponent* GetMovementHelper()
+	{ return MovementHelper; }
 };
