@@ -2,6 +2,7 @@
 
 #include "AssignmentGame.h"
 #include "Single/ManagerClass/ManagerClass.h"
+#include "Structures/PlayerInfo/PlayerInfo.h"
 #include "PlayerManager.generated.h"
 
 UCLASS()
@@ -17,6 +18,9 @@ private :
 	// 플레이어 컨트롤러
 	UPROPERTY()
 	class APlayableController* PlayerController;
+
+	UPROPERTY()
+	FPlayerInfo PlayerInfo;
 
 public:
 	// 플레이어 컨트롤러와 캐릭터를 등록합니다.
@@ -35,6 +39,9 @@ public:
 	// 플레이어 컨트롤러를 얻습니다.
 	FORCEINLINE class APlayableController* GetPlayableController() const
 	{ return PlayerController; }
+
+	FORCEINLINE FPlayerInfo* GetPlayerInfo()
+	{ return &PlayerInfo; }
 
 
 };
