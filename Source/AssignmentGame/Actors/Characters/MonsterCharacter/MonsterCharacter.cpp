@@ -2,6 +2,7 @@
 
 AMonsterCharacter::AMonsterCharacter()
 {
+	// 몬스터팀으로 설정합니다.
 	SetGenericTeamId(TEAM_MONSTER);
 }
 

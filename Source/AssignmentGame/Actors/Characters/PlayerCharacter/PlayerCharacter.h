@@ -27,6 +27,8 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void PossessedBy(AController* NewController) override;
+
 	virtual float GetMaxHp() override;
 	virtual float GetHp() override;
 	virtual void SetHp(float value) override;
