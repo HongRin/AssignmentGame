@@ -10,8 +10,16 @@ class ASSIGNMENTGAME_API APlayerCharacter : public ABaseCharacter
 	GENERATED_BODY()
 	
 private :
+	// 캐릭터의 이동을 담당하는 컴포넌트
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UMovementHelperComponent* MovementHelper;
+	
+	// 캐릭터의 줌을 담당하는 컴포넌트
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UZoomableSpringArmComponent* ZoomableSpringArm;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UCameraComponent* Camera;
 
 public :
 	APlayerCharacter();
@@ -45,4 +53,7 @@ private :
 public :
 	FORCEINLINE class UMovementHelperComponent* GetMovementHelper()
 	{ return MovementHelper; }
+
+	FORCEINLINE class UZoomableSpringArmComponent* GetZoomableSpringArm() const
+	{ return ZoomableSpringArm; }
 };

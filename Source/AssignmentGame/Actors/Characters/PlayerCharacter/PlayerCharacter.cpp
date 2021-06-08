@@ -1,5 +1,6 @@
 #include "PlayerCharacter.h"
 #include "Components/MovementHelper/MovementHelperComponent.h"
+#include "Components/ZoomableSpringArm/ZoomableSpringArmComponent.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -53,6 +54,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAxis(TEXT("Vertical"),
 		GetMovementHelper(), &UMovementHelperComponent::InputVertical);
+
+	PlayerInputComponent->BindAxis(TEXT("MouseWheel"),
+		GetZoomableSpringArm(), &UZoomableSpringArmComponent::ZoomCamera);
 }
 
 void APlayerCharacter::PossessedBy(AController* NewController)
@@ -81,8 +85,41 @@ void APlayerCharacter::OnCharacterDie()
 
 void APlayerCharacter::InitializePlayer()
 {
-#pragma region Component
-	MovementHelper = CreateDefaultSubobject<UMovementHelperComponent>(TEXT("MOVEMENT_HELPER"));
+#pragma region Asset
+	// SkeletalMesh 로드
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY(
+		TEXT("SkeletalMesh'/Game/Actors/PlayerCharacter/Mesh/ms06_Rat.ms06_Rat'"));
+	// SkeletalMesh 설정
+	if (SK_BODY.Succeeded()) GetMesh()->SetSkeletalMesh(SK_BODY.Object);
+
+	// 캐릭터 기본 위치 / 회전 설정
+	GetMesh()->SetRelativeLocationAndRotation(
+		FVector::DownVector * 40.0f,
+		FRotator(0.0f, -90.0f, 0.0f));
+
+	GetCapsuleComponent()->SetCapsuleHalfHeight(40.0f);
 #pragma endregion
 
+#pragma region Component
+	MovementHelper = CreateDefaultSubobject<UMovementHelperComponent>(TEXT("MOVEMENT_HELPER"));
+	ZoomableSpringArm = CreateDefaultSubobject<UZoomableSpringArmComponent>(TEXT("ZOOMABLE_SPRING_ARM"));
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	Camera->SetConstraintAspectRatio(true);
+
+	// Spring Arm Component 를 루트 컴포넌트에 추가합니다.
+	ZoomableSpringArm->SetupAttachment(GetRootComponent());
+
+	// Camera Component 를 SpringArm 컴포넌트에 추가합니다.
+	Camera->SetupAttachment(ZoomableSpringArm);
+
+	// 컨트롤러의 회전값을 SpringArm Component 회전값으로 사용합니다.
+	ZoomableSpringArm->bUsePawnControlRotation = true;
+
+	// 컨트롤러의 회전중 Yaw, Pitch 회전을 사용합니다.
+	ZoomableSpringArm->bInheritYaw = true;
+	ZoomableSpringArm->bInheritPitch = true;
+
+	// SpringArm 오프셋을 설정합니다.
+	ZoomableSpringArm->TargetOffset = FVector::UpVector * 40.0f;
+#pragma endregion
 }
