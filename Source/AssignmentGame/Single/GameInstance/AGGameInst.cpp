@@ -1,8 +1,12 @@
 #include "AGGameInst.h"
+#include "Single/PlayerManager/PlayerManager.h"
 
 void UAGGameInst::Init()
 {
 	Super::Init();
+
+	// 플레이어 매니저를 추가합니다.
+	RegisterManagerClass(UPlayerManager::StaticClass());
 }
 
 void UAGGameInst::Shutdown()
