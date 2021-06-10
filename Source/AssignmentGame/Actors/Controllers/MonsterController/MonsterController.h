@@ -14,6 +14,12 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UAISenseConfig_Sight* AISightConfig;
 
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UBehaviorTree* MonsterBehaviorTree;
+
+	UPROPERTY()
+	class AActor* TrackingTargetActor;
+
 public:
 	AMonsterController();
 
@@ -21,4 +27,11 @@ public:
 	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float dt) override;
+
+private:
+	void TrackingPlayer();
+
+private:
+	UFUNCTION()
+	void OnSightDetected(AActor* Actor, FAIStimulus Stimulus);
 };

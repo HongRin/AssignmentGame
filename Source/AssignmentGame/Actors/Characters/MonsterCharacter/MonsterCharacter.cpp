@@ -15,6 +15,9 @@ AMonsterCharacter::AMonsterCharacter()
 	SetGenericTeamId(TEAM_MONSTER);
 
 	AIControllerClass = AMonsterController::StaticClass();
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MonsterCollision"));
+	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AMonsterCharacter::BeginPlay()
