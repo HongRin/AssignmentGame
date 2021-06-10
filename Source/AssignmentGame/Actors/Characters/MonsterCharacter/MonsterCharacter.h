@@ -10,6 +10,9 @@ class ASSIGNMENTGAME_API AMonsterCharacter : public ABaseCharacter
 	GENERATED_BODY()
 	
 private :
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
+	class UMonsterAttackComponent* MonsterAttack;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Basic", meta = (AllowPrivateAccess = "true"))
 	float MaxHp;
 

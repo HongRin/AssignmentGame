@@ -1,6 +1,7 @@
 #include "MonsterCharacter.h"
 #include "Actors/Controllers/MonsterController/MonsterController.h"
 #include "AnimInstance/MonsterAnimInst/MonsterAnimInst.h"
+#include "Components/MonsterAttack/MonsterAttackComponent.h"
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
 #include "BrainComponent.h"
@@ -18,6 +19,8 @@ AMonsterCharacter::AMonsterCharacter()
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MonsterCollision"));
 	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
+
+	MonsterAttack = CreateDefaultSubobject<UMonsterAttackComponent>(TEXT("MONSTER_ATTACK"));
 }
 
 void AMonsterCharacter::BeginPlay()
