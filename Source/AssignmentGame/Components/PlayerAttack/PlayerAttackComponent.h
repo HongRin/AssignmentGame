@@ -16,8 +16,14 @@ public :
 	OnAttackEventSignatue OnAttackFinished;
 
 private :
+	UPROPERTY()
+	TSubclassOf<class ABullet> BP_Bullet;
+
 	class UAnimMontage* AttackAnimMontage;
 	class APlayerCharacter* PlayerCharacter;
+
+	UPROPERTY()
+	class UObjectPool* BulletObjectPool;
 
 private :
 	bool IsAttack;
@@ -30,5 +36,6 @@ protected:
 
 public :
 	void PlayAttack();
+	void CreateBullet();
 		
 };

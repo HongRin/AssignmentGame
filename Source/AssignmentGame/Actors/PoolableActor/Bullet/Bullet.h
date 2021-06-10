@@ -15,9 +15,6 @@ private :
 	class UStaticMesh* BulletMeshAsset;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Default", meta = (AllowPrivateAccess = true))
-	class UCapsuleComponent* Capsule;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Default", meta = (AllowPrivateAccess = true))
 	class UStaticMeshComponent* BulletMesh;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -34,6 +31,9 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+
+public :
+	void InitializeBullet(FVector loc, FRotator roc = FRotator::ZeroRotator);
 
 public:
 	FORCEINLINE virtual int32 GetID() const override

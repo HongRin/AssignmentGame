@@ -17,7 +17,7 @@ void UPlayerAnimInst::NativeUpdateAnimation(float dt)
 
 void UPlayerAnimInst::AnimNotify_FireBullet()
 {
-
+	Owner->GetPlayerAttack()->CreateBullet();
 }
 
 void UPlayerAnimInst::AnimNotify_AttackFin()

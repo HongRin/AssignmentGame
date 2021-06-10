@@ -9,16 +9,12 @@ ABullet::ABullet()
 	if (ST_STONE.Succeeded()) BulletMeshAsset = ST_STONE.Object;
 	else UE_LOG(LogTemp, Error, TEXT("ABullet.cpp::%d::LINE::ST_STONE is not loaded!"), __LINE__);
 
-	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CAPSULE_COM"));
-	Capsule->SetCapsuleRadius(34.0f);
-	Capsule->SetCapsuleHalfHeight(34.0f);
-	
 	if (IsValid(BulletMeshAsset))
 	{
 		BulletMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ST_BULLET"));
+		BulletMesh->SetupAttachment(GetRootComponent());
 		BulletMesh->SetStaticMesh(BulletMeshAsset);
 		BulletMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
-		BulletMesh->SetRelativeLocation(FVector(0.0f, -30.0f, 0.0f));
 	}
 
 	SetID(DEFAULT_BULLET);
@@ -34,6 +30,11 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ABullet::InitializeBullet(FVector loc, FRotator roc)
+{
+	SetActorLocationAndRotation(loc, roc);
 }
 
 void ABullet::OnRecycleStart()
