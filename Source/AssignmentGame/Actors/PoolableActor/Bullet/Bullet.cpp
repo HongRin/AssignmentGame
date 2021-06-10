@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 
 ABullet::ABullet()
 {
@@ -30,11 +31,18 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Fire();
 }
 
-void ABullet::InitializeBullet(FVector loc, FRotator roc)
+void ABullet::InitializeBullet(FVector loc, FRotator roc, FVector fireDirection)
 {
 	SetActorLocationAndRotation(loc, roc);
+	FireDirection = fireDirection;
+}
+
+void ABullet::Fire()
+{
+	SetActorLocation(GetActorLocation() + FireDirection * 15.0f);
 }
 
 void ABullet::OnRecycleStart()

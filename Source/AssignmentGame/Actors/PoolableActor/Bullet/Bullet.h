@@ -23,6 +23,9 @@ private :
 	UPROPERTY()
 	bool bCanRecyclable;
 
+	UPROPERTY()
+	FVector FireDirection;
+
 public:	
 	ABullet();
 
@@ -33,7 +36,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public :
-	void InitializeBullet(FVector loc, FRotator roc = FRotator::ZeroRotator);
+	void InitializeBullet(FVector loc, FRotator roc, FVector fireDirection);
+
+private:
+	void Fire();
 
 public:
 	FORCEINLINE virtual int32 GetID() const override
