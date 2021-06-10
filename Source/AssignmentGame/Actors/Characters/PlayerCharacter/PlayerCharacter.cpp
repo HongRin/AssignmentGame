@@ -1,6 +1,7 @@
 #include "PlayerCharacter.h"
 #include "Components/MovementHelper/MovementHelperComponent.h"
 #include "Components/ZoomableSpringArm/ZoomableSpringArmComponent.h"
+#include "Components/PlayerAttack/PlayerAttackComponent.h"
 #include "AnimInstance/PlayerAnimInst/PlayerAnimInst.h"
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -51,6 +52,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,
 		GetMovementHelper(), &UMovementHelperComponent::JumpKeyPressed);
+
+	PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed,
+		GetMovementHelper(), &UMovementHelperComponent::Attack);
 
 	PlayerInputComponent->BindAxis(TEXT("Horizontal"),
 		GetMovementHelper(), &UMovementHelperComponent::InputHorizontal);
@@ -127,5 +131,7 @@ void APlayerCharacter::InitializePlayer()
 
 	// SpringArm 오프셋을 설정합니다.
 	ZoomableSpringArm->TargetOffset = FVector::UpVector * 40.0f;
+
+	PlayerAttack = CreateDefaultSubobject<UPlayerAttackComponent>(TEXT("PLAYER_ATTACK_COM"));
 #pragma endregion
 }

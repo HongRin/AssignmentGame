@@ -1,6 +1,7 @@
 #include "PlayerAnimInst.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 #include "Components/MovementHelper/MovementHelperComponent.h"
+#include "Components/PlayerAttack/PlayerAttackComponent.h"
 
 void UPlayerAnimInst::NativeUpdateAnimation(float dt)
 {
@@ -12,4 +13,15 @@ void UPlayerAnimInst::NativeUpdateAnimation(float dt)
 	
 	VelocityLength = Owner->GetVelocity().Size();
 	bIsInAir = Owner->GetMovementHelper()->IsInAir();
+}
+
+void UPlayerAnimInst::AnimNotify_FireBullet()
+{
+
+}
+
+void UPlayerAnimInst::AnimNotify_AttackFin()
+{
+	if (Owner->GetPlayerAttack()->OnAttackFinished.IsBound())
+		Owner->GetPlayerAttack()->OnAttackFinished.Broadcast();
 }

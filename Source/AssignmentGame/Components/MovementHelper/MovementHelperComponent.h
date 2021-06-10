@@ -13,6 +13,8 @@ class ASSIGNMENTGAME_API UMovementHelperComponent : public UActorComponent
 private:
 	class APlayerCharacter* PlayerCharacter;
 
+	bool IsCanMove;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -27,5 +29,9 @@ public:
 
 	void InputHorizontal(float axis);
 	void InputVertical(float axis);
-		
+
+	void Attack();
+
+	FORCEINLINE void SetIsCanMove(bool isCanMove)
+	{ IsCanMove = isCanMove; }
 };

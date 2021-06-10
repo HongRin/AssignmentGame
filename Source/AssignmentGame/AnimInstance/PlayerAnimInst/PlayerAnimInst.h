@@ -21,4 +21,11 @@ protected:
 
 public :
 	virtual void NativeUpdateAnimation(float dt) override;
+
+private :
+	UFUNCTION()
+	void AnimNotify_FireBullet();
+
+	UFUNCTION()
+	void AnimNotify_AttackFin();
 };

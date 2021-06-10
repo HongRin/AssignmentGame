@@ -21,6 +21,9 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* Camera;
 
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UPlayerAttackComponent* PlayerAttack;
+
 public :
 	APlayerCharacter();
 
@@ -56,4 +59,7 @@ public :
 
 	FORCEINLINE class UZoomableSpringArmComponent* GetZoomableSpringArm() const
 	{ return ZoomableSpringArm; }
+
+	FORCEINLINE class UPlayerAttackComponent* GetPlayerAttack() const
+	{ return PlayerAttack; }
 };

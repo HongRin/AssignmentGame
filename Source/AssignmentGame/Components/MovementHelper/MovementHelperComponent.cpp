@@ -1,5 +1,6 @@
 #include "MovementHelperComponent.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Components/PlayerAttack/PlayerAttackComponent.h"
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
 
@@ -20,6 +21,8 @@ void UMovementHelperComponent::BeginPlay()
 
 	// 점프 초기 가속력 설정
 	PlayerCharacter->GetCharacterMovement()->JumpZVelocity = 1000.0f;
+
+	IsCanMove = true;
 }
 
 bool UMovementHelperComponent::IsInAir() const
@@ -30,21 +33,27 @@ bool UMovementHelperComponent::IsInAir() const
 
 void UMovementHelperComponent::RunKeyPressed()
 {
+	if (!IsCanMove) return;
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed =
 		GetManager(UPlayerManager)->GetPlayerInfo()->RunSpeed;
 }
 
 void UMovementHelperComponent::RunKeyReleased()
 {
+	if (!IsCanMove) return;
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 
 		GetManager(UPlayerManager)->GetPlayerInfo()->WalkSpeed; 
 }
 
 void UMovementHelperComponent::JumpKeyPressed()
-{ PlayerCharacter->Jump(); }
+{ 
+	if (!IsCanMove) return;
+	PlayerCharacter->Jump(); 
+}
 
 void UMovementHelperComponent::InputHorizontal(float axis)
 {
+	if (!IsCanMove) return;
 	// 컨트롤러 회전중 Yaw 회전만을 저장합니다.
 	FRotator yawRotation(0.0f, PlayerCharacter->GetControlRotation().Yaw, 0.0f);
 
@@ -58,6 +67,8 @@ void UMovementHelperComponent::InputHorizontal(float axis)
 
 void UMovementHelperComponent::InputVertical(float axis)
 {
+	if (!IsCanMove) return;
+
 	// 컨트롤러 회전중 Yaw 회전만을 저장합니다.
 	FRotator yawRotation(0.0f, PlayerCharacter->GetControlRotation().Yaw, 0.0f);
 
@@ -65,5 +76,11 @@ void UMovementHelperComponent::InputVertical(float axis)
 	FVector forwardVector = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::X);
 
 	PlayerCharacter->AddMovementInput(forwardVector, axis);
+}
+
+void UMovementHelperComponent::Attack()
+{ 
+	if (IsInAir() && !IsCanMove) return;
+	PlayerCharacter->GetPlayerAttack()->PlayAttack(); 
 }
 
