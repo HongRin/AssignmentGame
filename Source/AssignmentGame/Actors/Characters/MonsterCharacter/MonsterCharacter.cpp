@@ -1,7 +1,9 @@
 #include "MonsterCharacter.h"
+#include "Actors/Controllers/MonsterController/MonsterController.h"
 #include "AnimInstance/MonsterAnimInst/MonsterAnimInst.h"
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
+#include "BrainComponent.h"
 
 AMonsterCharacter::AMonsterCharacter()
 {
@@ -11,6 +13,8 @@ AMonsterCharacter::AMonsterCharacter()
 
 	// 몬스터팀으로 설정합니다.
 	SetGenericTeamId(TEAM_MONSTER);
+
+	AIControllerClass = AMonsterController::StaticClass();
 }
 
 void AMonsterCharacter::BeginPlay()

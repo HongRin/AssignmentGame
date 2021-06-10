@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Actors/Characters/BaseCharacter.h"
 #include "Structures/MonsterInfo/MonsterInfo.h"
 #include "MonsterCharacter.generated.h"
