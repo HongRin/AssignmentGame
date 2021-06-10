@@ -21,11 +21,16 @@ void AMonsterCharacter::BeginPlay()
 
 	// 몬스터 정보 설정
 	InitializeMonsterDataConstructTime();
+
+	Tags.Add(TEXT("Monster"));
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
+
+	UE_LOG(LogTemp, Warning, TEXT("Name[%s]::MaxHp[%.1f]::Hp[%.1f]"), 
+		*MonsterInfo.MonsterName.ToString(), GetMaxHp(), GetHp());
 }
 
 void AMonsterCharacter::InitializeSkeletalMeshComponent()

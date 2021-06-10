@@ -1,5 +1,9 @@
 #include "Bullet.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Actors/Controllers/PlayerController/PlayableController.h"
+#include "Actors/Characters/MonsterCharacter/MonsterCharacter.h"
+#include "Single/GameInstance/AGGameInst.h"
+#include "Single/PlayerManager/PlayerManager.h"
 
 ABullet::ABullet()
 {
@@ -18,13 +22,18 @@ ABullet::ABullet()
 		BulletMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 	}
 
+	BulletSphere = CreateDefaultSubobject<USphereComponent>(TEXT("BULLET_SPHERE"));
+	BulletSphere->SetupAttachment(BulletMesh);
+	BulletSphere->SetSphereRadius(40.0f);
+
 	SetID(DEFAULT_BULLET);
 }
 
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	BulletSphere->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnMonsterHit);
 }
 
 void ABullet::Tick(float DeltaTime)
@@ -34,17 +43,44 @@ void ABullet::Tick(float DeltaTime)
 	Fire();
 }
 
-void ABullet::InitializeBullet(FVector loc, FRotator roc, FVector fireDirection)
+void ABullet::InitializeBullet(FVector loc, FRotator roc, FVector fireDirection, FVector fireLocation)
 {
 	SetActorLocationAndRotation(loc, roc);
 	FireDirection = fireDirection;
+	FireLocation = fireLocation;
 }
 
 void ABullet::Fire()
 {
-	SetActorLocation(GetActorLocation() + FireDirection * 15.0f);
+	float firingdistance = FVector::Distance(GetActorLocation(), FireLocation);
+
+	if (firingdistance > 600.0f)
+	{
+		SetCanRecyclable(true);
+		BulletMesh->SetHiddenInGame(true);
+		return;
+	}
+	SetActorLocation(GetActorLocation() + FireDirection * 15.0f, true);
+
+}
+
+void ABullet::OnMonsterHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag(TEXT("Monster")))
+	{
+		OtherActor->TakeDamage(
+			GetManager(UPlayerManager)->GetPlayerInfo()->Atk,
+			FDamageEvent(),
+			GetManager(UPlayerManager)->GetPlayableController(),
+			GetManager(UPlayerManager)->GetPlayableCharacter());
+		
+		SetCanRecyclable(true);
+		BulletMesh->SetHiddenInGame(true);
+	}
 }
 
 void ABullet::OnRecycleStart()
-{ }
+{
+	BulletMesh->SetHiddenInGame(false);
+}
 

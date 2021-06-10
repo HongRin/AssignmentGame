@@ -51,6 +51,6 @@ void UPlayerAttackComponent::CreateBullet()
 	}
 
 	bullet->InitializeBullet((PlayerCharacter->GetActorLocation() + PlayerCharacter->GetActorForwardVector() * 40.0f), 
-		FRotator::ZeroRotator, PlayerCharacter->GetActorForwardVector());
+		FRotator::ZeroRotator, PlayerCharacter->GetActorForwardVector(), PlayerCharacter->GetActorLocation());
 }
 
