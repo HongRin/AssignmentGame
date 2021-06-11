@@ -4,6 +4,9 @@
 
 #include "Components/MonsterAttack/MonsterAttackComponent.h"
 #include "Components/PlayerDetector/PlayerDetectorComponent.h"
+#include "Components/MonsterWidget/MonsterWigdetComponent.h"
+
+#include "Widgets/CharacterWidget/Monster/HpableCharacterWidget.h"
 
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -31,6 +34,9 @@ AMonsterCharacter::AMonsterCharacter()
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MonsterCollision"));
 	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
+
+	MonsterWidget = CreateDefaultSubobject<UMonsterWigdetComponent>(TEXT("Monster_WIDGET"));
+	MonsterWidget->SetupAttachment(GetRootComponent());
 }
 
 void AMonsterCharacter::BeginPlay()
@@ -43,14 +49,19 @@ void AMonsterCharacter::BeginPlay()
 	InitializeMonsterDataConstructTime();
 
 	Tags.Add(TEXT("Monster"));
+
+	// À§Á¬ ¼ÂÆÃ
+	MonsterWidget->GetMonsterWidgetInstance()->InitializeWidget(this);
+	MonsterWidget->GetMonsterWidgetInstance()->SetNameText(MonsterInfo.MonsterName);
+	MonsterWidget->GetMonsterWidgetInstance()->SetLevelText(0);
+	MonsterWidget->GetMonsterWidgetInstance()->UpdateHp();
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
 
-	UE_LOG(LogTemp, Warning, TEXT("Name[%s]::MaxHp[%.1f]::Hp[%.1f]"), 
-		*MonsterInfo.MonsterName.ToString(), GetMaxHp(), GetHp());
+	MonsterWidget->GetMonsterWidgetInstance()->UpdateHp();
 }
 
 void AMonsterCharacter::InitializeSkeletalMeshComponent()
