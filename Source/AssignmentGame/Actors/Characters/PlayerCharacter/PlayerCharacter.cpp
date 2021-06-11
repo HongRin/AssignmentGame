@@ -36,6 +36,9 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
+
+	if (OnTakeDamageEvent.IsBound())
+		OnTakeDamageEvent.Broadcast();
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
