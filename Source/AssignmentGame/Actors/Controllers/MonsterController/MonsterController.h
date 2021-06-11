@@ -36,6 +36,9 @@ private:
 
 	bool IsPlayerNearby();
 
+public:
+	void IsLookatPlayer();
+
 private:
 	UFUNCTION()
 	void OnSightDetected(AActor* Actor, FAIStimulus Stimulus);

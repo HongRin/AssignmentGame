@@ -24,7 +24,8 @@ void UMonsterAttackComponent::PlayMonsterAttackAnimation()
 	if (AttackState) return;
 	if (!IsValid(MonsterAttack)) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("MonsterAttackAnim"));
+	if (OnMonsterAttackStarted.IsBound())
+		OnMonsterAttackStarted.Broadcast();
 
 	if (FMath::FRandRange(0, 100) < 50.0f)
 		MonsterCharacter->PlayAnimMontage(MonsterAttack, 1.0f, TEXT("AttackOne"));
@@ -44,8 +45,8 @@ void UMonsterAttackComponent::ActiveMonsterAttackRange()
 	UKismetSystemLibrary::SphereTraceMultiByProfile(
 		GetWorld(),
 		MonsterCharacter->GetActorLocation(),
-		MonsterCharacter->GetActorLocation() + (MonsterCharacter->GetActorForwardVector() * 200.0f),
-		200.0f,
+		MonsterCharacter->GetActorLocation() + (MonsterCharacter->GetActorForwardVector() * 100.0f),
+		100.0f,
 		TEXT("AttackRange"),
 		true,
 		actorsToIgnore,

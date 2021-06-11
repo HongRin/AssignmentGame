@@ -1,5 +1,6 @@
 #include "MonsterAnimInst.h"
 #include "Actors/Characters/MonsterCharacter/MonsterCharacter.h"
+#include "Actors/Controllers/MonsterController/MonsterController.h"
 #include "Components/MonsterAttack/MonsterAttackComponent.h"
 
 void UMonsterAnimInst::NativeUpdateAnimation(float dt)
@@ -15,6 +16,7 @@ void UMonsterAnimInst::NativeUpdateAnimation(float dt)
 
 void UMonsterAnimInst::AnimNotify_UpdateRotation()
 {
+	Cast<AMonsterController>(Owner->GetController())->IsLookatPlayer();
 }
 
 void UMonsterAnimInst::AnimNotify_AttackRange()

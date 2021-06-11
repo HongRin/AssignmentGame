@@ -28,6 +28,9 @@ AMonsterCharacter::AMonsterCharacter()
 	PlayerDetector->SetupAttachment(GetRootComponent());
 
 	MonsterAttack = CreateDefaultSubobject<UMonsterAttackComponent>(TEXT("MONSTER_ATTACK"));
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MonsterCollision"));
+	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AMonsterCharacter::BeginPlay()

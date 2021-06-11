@@ -4,6 +4,7 @@
 #include "Perception/AISenseConfig_Sight.h"
 
 #include "Components/PlayerDetector/PlayerDetectorComponent.h"
+#include "Components/MonsterAttack/MonsterAttackComponent.h"
 
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -62,6 +63,12 @@ void AMonsterController::OnPossess(APawn* InPawn)
 	else
 		UE_LOG(LogTemp, Error,
 			TEXT("MonsterController.cpp :: %d LINE :: MonseterBehaviorTree is not loaded !"), __LINE__);
+
+	MonsterCharacter->GetMonsterAttack()->OnMonsterAttackStarted.AddUObject(
+		this, &AMonsterController::IsLookatPlayer);
+
+	MonsterCharacter->GetMonsterAttack()->OnMonsterAttackStarted.AddLambda([this]()->void
+		{ MoveToActor(MonsterCharacter); });
 }
 
 void AMonsterController::Tick(float dt)
@@ -96,6 +103,22 @@ bool AMonsterController::IsPlayerNearby()
 	GetBlackboardComponent()->SetValueAsBool(TEXT("PlayerIsNearby"), nearby);
 
 	return nearby;
+}
+
+void AMonsterController::IsLookatPlayer()
+{
+	if (!IsValid(TrackingTargetActor)) return;
+
+	FVector trackingLocation = TrackingTargetActor->GetActorLocation();
+	FVector currentLocation = GetMonsterCharacter()->GetActorLocation();
+
+	FVector direction = trackingLocation - currentLocation;
+
+	direction.Z = 0.0f;
+
+	direction = direction.GetSafeNormal();
+
+	MonsterCharacter->SetActorRotation(direction.Rotation());
 }
 
 void AMonsterController::OnSightDetected(AActor* Actor, FAIStimulus Stimulus)

@@ -12,6 +12,7 @@ class ASSIGNMENTGAME_API UMonsterAttackComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	FOnMonsterAttackEventSignature OnMonsterAttackStarted;
 	FOnMonsterAttackEventSignature OnMonsterAttackFinished;
 
 private :
