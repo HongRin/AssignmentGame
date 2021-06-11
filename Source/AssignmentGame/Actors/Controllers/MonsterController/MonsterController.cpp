@@ -68,9 +68,11 @@ void AMonsterController::Tick(float dt)
 {
 	Super::Tick(dt);
 
-	if (!IsPlayerNearby())
-		TrackingPlayer();
-	else UE_LOG(LogTemp, Warning, TEXT("Attack!"));
+	if (GetMonsterCharacter()->IsMovable())
+	{
+		if (!IsPlayerNearby())
+			TrackingPlayer();
+	}
 }
 
 void AMonsterController::TrackingPlayer()

@@ -24,10 +24,12 @@ void UMonsterAttackComponent::PlayMonsterAttackAnimation()
 	if (AttackState) return;
 	if (!IsValid(MonsterAttack)) return;
 
+	UE_LOG(LogTemp, Warning, TEXT("MonsterAttackAnim"));
+
 	if (FMath::FRandRange(0, 100) < 50.0f)
-		MonsterCharacter->PlayAnimMontage(MonsterAttack, 1.0f, TEXT("Skill"));
+		MonsterCharacter->PlayAnimMontage(MonsterAttack, 1.0f, TEXT("AttackOne"));
 	else
-		MonsterCharacter->PlayAnimMontage(MonsterAttack, 1.0f, TEXT("Attack"));
+		MonsterCharacter->PlayAnimMontage(MonsterAttack, 1.0f, TEXT("AttackTwo"));
 
 	AttackState = true;
 }

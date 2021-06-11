@@ -62,6 +62,8 @@ public:
 		void InitializeMonsterDataConstructTime();
 
 public:
+	bool IsMovable() const;
+
 	FORCEINLINE virtual float GetMaxHp() override
 	{ return MaxHp; }
 	FORCEINLINE virtual float GetHp() override

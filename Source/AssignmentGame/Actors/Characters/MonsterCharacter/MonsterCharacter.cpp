@@ -115,6 +115,11 @@ void AMonsterCharacter::InitializeMonsterDataConstructTime()
 	InitializeSkeletalMeshComponent();
 }
 
+bool AMonsterCharacter::IsMovable() const
+{
+	return !GetMonsterAttack()->IsMonsterAttacking();
+}
+
 void AMonsterCharacter::OnCharacterDie()
 {
 }

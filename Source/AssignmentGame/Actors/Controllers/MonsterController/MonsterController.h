@@ -39,4 +39,8 @@ private:
 private:
 	UFUNCTION()
 	void OnSightDetected(AActor* Actor, FAIStimulus Stimulus);
+
+public :
+	FORCEINLINE class AMonsterCharacter* GetMonsterCharacter() const
+	{ return MonsterCharacter; }
 };
