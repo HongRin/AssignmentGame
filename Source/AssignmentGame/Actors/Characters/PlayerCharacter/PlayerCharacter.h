@@ -4,16 +4,10 @@
 #include "Actors/Characters/BaseCharacter.h"
 #include "PlayerCharacter.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(OnTakeDamageEventSignatue);
-
-
 UCLASS()
 class ASSIGNMENTGAME_API APlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
-
-public :
-	OnTakeDamageEventSignatue OnTakeDamageEvent;
 
 private :
 	// 캐릭터의 이동을 담당하는 컴포넌트
@@ -29,6 +23,10 @@ private :
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UPlayerAttackComponent* PlayerAttack;
+
+private:
+	TSubclassOf<class UPlayerWidget> BP_PlayerWidget;
+	class UPlayerWidget* PlayerWidget;
 
 public :
 	APlayerCharacter();

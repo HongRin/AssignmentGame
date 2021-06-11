@@ -9,9 +9,7 @@ class ASSIGNMENTGAME_API ADungeonLevel : public ALevelScriptActor
 {
 	GENERATED_BODY()
 
-private:
-	TSubclassOf<class UPlayerWidget> BP_PlayerWidget;
-	class UPlayerWidget* PlayerWidget;
+
 
 public:
 	ADungeonLevel();

@@ -5,6 +5,8 @@
 #include "AnimInstance/PlayerAnimInst/PlayerAnimInst.h"
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
+#include "Widgets/CharacterWidget/Player/PlayerWidget.h"
+
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -31,14 +33,18 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerWidget = CreateWidget<UPlayerWidget>(GetWorld(), BP_PlayerWidget);
+
+	PlayerWidget->AddToViewport();
+	PlayerWidget->UpdatePlayerHp();
+	PlayerWidget->UpdateMoney();
+
 }
 
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
-
-	if (OnTakeDamageEvent.IsBound())
-		OnTakeDamageEvent.Broadcast();
+	PlayerWidget->UpdatePlayerHp();
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -116,6 +122,10 @@ void APlayerCharacter::InitializePlayer()
 	static ConstructorHelpers::FClassFinder<UPlayerAnimInst> ANIM_BP_PLAYER(
 		TEXT("AnimBlueprint'/Game/Actors/PlayerCharacter/Animations/AnimBP_Player.AnimBP_Player_C'"));
 	if (ANIM_BP_PLAYER.Succeeded()) GetMesh()->SetAnimClass(ANIM_BP_PLAYER.Class);
+
+	static ConstructorHelpers::FClassFinder<UPlayerWidget> BP_PLAYER_WIDGET(
+		TEXT("WidgetBlueprint'/Game/Blueprints/Widget/BP_PlayerWidget.BP_PlayerWidget_C'"));
+	if (BP_PLAYER_WIDGET.Succeeded()) BP_PlayerWidget = BP_PLAYER_WIDGET.Class;
 #pragma endregion
 
 #pragma region Component
