@@ -18,4 +18,14 @@ protected:
 
 public:
 	virtual void NativeUpdateAnimation(float dt) override;
+
+private:
+	UFUNCTION()
+	void AnimNotify_UpdateRotation();
+
+	UFUNCTION()
+	void AnimNotify_AttackRange();
+
+	UFUNCTION()
+	void AnimNotify_AttackFin();
 };

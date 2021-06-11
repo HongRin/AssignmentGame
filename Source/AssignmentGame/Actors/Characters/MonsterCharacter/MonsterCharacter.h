@@ -69,5 +69,12 @@ public:
 	FORCEINLINE virtual void SetHp(float value) override
 	{ Hp = value; }
 
+	FORCEINLINE float GetAtk() const
+	{ return Atk; }
+
+	FORCEINLINE class UMonsterAttackComponent* GetMonsterAttack() const
+	{ return MonsterAttack; }
+
+
 	virtual void OnCharacterDie() override;
 };
