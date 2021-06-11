@@ -36,8 +36,6 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
-
-	UE_LOG(LogTemp, Warning, TEXT("Player::MaxHp[%.1f]::Hp[%.1f]"), GetMaxHp(), GetHp());
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
