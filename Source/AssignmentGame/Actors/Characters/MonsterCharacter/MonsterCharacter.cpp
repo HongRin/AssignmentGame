@@ -1,10 +1,13 @@
 #include "MonsterCharacter.h"
+#include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 #include "Actors/Controllers/MonsterController/MonsterController.h"
 #include "AnimInstance/MonsterAnimInst/MonsterAnimInst.h"
 
 #include "Components/MonsterAttack/MonsterAttackComponent.h"
 #include "Components/PlayerDetector/PlayerDetectorComponent.h"
 #include "Components/MonsterWidget/MonsterWigdetComponent.h"
+
+#include "Level/DungeonLevel.h"
 
 #include "Widgets/CharacterWidget/Monster/HpableCharacterWidget.h"
 
@@ -55,6 +58,9 @@ void AMonsterCharacter::BeginPlay()
 	MonsterWidget->GetMonsterWidgetInstance()->SetNameText(MonsterInfo.MonsterName);
 	MonsterWidget->GetMonsterWidgetInstance()->SetLevelText(0);
 	MonsterWidget->GetMonsterWidgetInstance()->UpdateHp();
+
+	DungeonLevel = Cast<ADungeonLevel>(GetWorld()->GetLevelScriptActor());
+	DungeonLevel->AddMonsterCharacters(this);
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -136,4 +142,10 @@ bool AMonsterCharacter::IsMovable() const
 
 void AMonsterCharacter::OnCharacterDie()
 {
+	GetManager(UPlayerManager)->GetPlayerInfo()->Money += MonsterInfo.DropMoney;
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
+	FString reason;
+	Cast<AMonsterController>(GetController())->GetBrainComponent()->StopLogic(reason);
+	DungeonLevel->RemoveMonsterCharacters(this);
+	Destroy();
 }

@@ -38,7 +38,6 @@ void APlayerCharacter::BeginPlay()
 	PlayerWidget->AddToViewport();
 	PlayerWidget->UpdatePlayerHp();
 	PlayerWidget->UpdateMoney();
-
 }
 
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)

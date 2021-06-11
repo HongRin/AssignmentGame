@@ -42,6 +42,9 @@ private :
 	// 몬스터 정보
 	FMonsterInfo MonsterInfo;
 
+	// 던전레벨
+	class ADungeonLevel* DungeonLevel;
+
 public:
 	AMonsterCharacter();
 

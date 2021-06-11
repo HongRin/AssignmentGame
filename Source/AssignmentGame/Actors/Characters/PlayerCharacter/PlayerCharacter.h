@@ -4,10 +4,16 @@
 #include "Actors/Characters/BaseCharacter.h"
 #include "PlayerCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(OnDropMoneyEventSignatue);
+
+
 UCLASS()
 class ASSIGNMENTGAME_API APlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
+
+public :
+	OnDropMoneyEventSignatue OnDropMoney;
 
 private :
 	// 캐릭터의 이동을 담당하는 컴포넌트
@@ -66,4 +72,10 @@ public :
 
 	FORCEINLINE class UPlayerAttackComponent* GetPlayerAttack() const
 	{ return PlayerAttack; }
+
+	FORCEINLINE bool IsDied() const
+	{ return bIsDie; }
+
+	FORCEINLINE class UPlayerWidget* GetPlayerWidget() const
+	{ return PlayerWidget; }
 };
