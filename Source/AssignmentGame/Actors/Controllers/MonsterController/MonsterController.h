@@ -20,6 +20,9 @@ private :
 	UPROPERTY()
 	class AActor* TrackingTargetActor;
 
+	UPROPERTY()
+	class AMonsterCharacter* MonsterCharacter;
+
 public:
 	AMonsterController();
 
@@ -30,6 +33,8 @@ public:
 
 private:
 	void TrackingPlayer();
+
+	bool IsPlayerNearby();
 
 private:
 	UFUNCTION()

@@ -75,6 +75,9 @@ public:
 	FORCEINLINE class UMonsterAttackComponent* GetMonsterAttack() const
 	{ return MonsterAttack; }
 
+	FORCEINLINE class UPlayerDetectorComponent* GetPlayerDetector() const
+	{ return PlayerDetector; }
+
 
 	virtual void OnCharacterDie() override;
 };

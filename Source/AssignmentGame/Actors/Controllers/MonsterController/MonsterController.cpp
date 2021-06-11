@@ -1,6 +1,9 @@
 #include "MonsterController.h"
+#include "Actors/Characters/MonsterCharacter/MonsterCharacter.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+
+#include "Components/PlayerDetector/PlayerDetectorComponent.h"
 
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -48,6 +51,8 @@ void AMonsterController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
+	MonsterCharacter = Cast<AMonsterCharacter>(InPawn);
+
 	if (IsValid(MonsterBehaviorTree))
 	{
 		RunBehaviorTree(MonsterBehaviorTree);
@@ -63,7 +68,9 @@ void AMonsterController::Tick(float dt)
 {
 	Super::Tick(dt);
 
-	TrackingPlayer();
+	if (!IsPlayerNearby())
+		TrackingPlayer();
+	else UE_LOG(LogTemp, Warning, TEXT("Attack!"));
 }
 
 void AMonsterController::TrackingPlayer()
@@ -73,6 +80,20 @@ void AMonsterController::TrackingPlayer()
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsTracking"), true);
 
 	MoveToActor(TrackingTargetActor);
+}
+
+bool AMonsterController::IsPlayerNearby()
+{
+	bool nearby = false;
+
+	if (IsValid(MonsterCharacter))
+	{
+		nearby = MonsterCharacter->GetPlayerDetector()->IsPlayerDetected();
+	}
+
+	GetBlackboardComponent()->SetValueAsBool(TEXT("PlayerIsNearby"), nearby);
+
+	return nearby;
 }
 
 void AMonsterController::OnSightDetected(AActor* Actor, FAIStimulus Stimulus)
