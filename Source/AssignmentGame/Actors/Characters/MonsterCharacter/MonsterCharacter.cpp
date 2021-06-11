@@ -10,6 +10,7 @@
 #include "Level/DungeonLevel.h"
 
 #include "Widgets/CharacterWidget/Monster/HpableCharacterWidget.h"
+#include "Widgets/CharacterWidget/Player/PlayerWidget.h"
 
 #include "Single/GameInstance/AGGameInst.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -143,6 +144,7 @@ bool AMonsterCharacter::IsMovable() const
 void AMonsterCharacter::OnCharacterDie()
 {
 	GetManager(UPlayerManager)->GetPlayerInfo()->Money += MonsterInfo.DropMoney;
+	GetManager(UPlayerManager)->GetPlayableCharacter()->GetPlayerWidget()->UpdateMoney();
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 	FString reason;
 	Cast<AMonsterController>(GetController())->GetBrainComponent()->StopLogic(reason);
