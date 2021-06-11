@@ -23,6 +23,8 @@ APlayerCharacter::APlayerCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 450.0f, 0.0f);
 
 	InitializePlayer();
+
+	Tags.Add(TEXT("Player"));
 }
 
 void APlayerCharacter::BeginPlay()

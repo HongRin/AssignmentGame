@@ -13,6 +13,9 @@ private :
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
 	class UMonsterAttackComponent* MonsterAttack;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
+	class UPlayerDetectorComponent* PlayerDetector;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Basic", meta = (AllowPrivateAccess = "true"))
 	float MaxHp;
 
