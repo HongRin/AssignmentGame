@@ -30,6 +30,7 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -86,7 +87,7 @@ float APlayerCharacter::GetHp()
 }
 
 void APlayerCharacter::SetHp(float value)
-{ GetManager(UPlayerManager)->GetPlayerInfo()->Hp -= value; }
+{ GetManager(UPlayerManager)->GetPlayerInfo()->Hp = value; }
 
 void APlayerCharacter::OnCharacterDie()
 {
@@ -101,6 +102,8 @@ void APlayerCharacter::InitializePlayer()
 		TEXT("SkeletalMesh'/Game/Actors/PlayerCharacter/Mesh/ms06_Rat.ms06_Rat'"));
 	// SkeletalMesh 설정
 	if (SK_BODY.Succeeded()) GetMesh()->SetSkeletalMesh(SK_BODY.Object);
+	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
+
 
 	// 캐릭터 기본 위치 / 회전 설정
 	GetMesh()->SetRelativeLocationAndRotation(
