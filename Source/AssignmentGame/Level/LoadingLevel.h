@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "AssignmentGame.h"
 #include "Engine/LevelScriptActor.h"
 #include "LoadingLevel.generated.h"
 
@@ -9,4 +9,12 @@ class ASSIGNMENTGAME_API ALoadingLevel : public ALevelScriptActor
 {
 	GENERATED_BODY()
 	
+private:
+	TSubclassOf<class UUserWidget> BP_Loading;
+
+public:
+	ALoadingLevel();
+
+protected:
+	virtual void BeginPlay() override;
 };

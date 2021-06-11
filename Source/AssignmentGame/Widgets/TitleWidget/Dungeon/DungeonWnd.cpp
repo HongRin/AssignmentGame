@@ -39,4 +39,6 @@ void UDungeonWnd::InitializeDungeonWnd()
 
 void UDungeonWnd::OnClickButtonSelect()
 {
+	GetGameInst(GetWorld())->SetNextLevelName(FName(*DungeonInfo->DungeonName.ToString()));
+	UGameplayStatics::OpenLevel(this, FName(TEXT("Loading")));
 }
