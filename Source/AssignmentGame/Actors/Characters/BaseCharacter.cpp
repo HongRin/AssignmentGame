@@ -33,5 +33,6 @@ void ABaseCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDam
 
 void ABaseCharacter::OnCharacterDie()
 {
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 }
 

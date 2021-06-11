@@ -143,11 +143,17 @@ bool AMonsterCharacter::IsMovable() const
 
 void AMonsterCharacter::OnCharacterDie()
 {
+	Super::OnCharacterDie();
+
 	GetManager(UPlayerManager)->GetPlayerInfo()->Money += MonsterInfo.DropMoney;
 	GetManager(UPlayerManager)->GetPlayableCharacter()->GetPlayerWidget()->UpdateMoney();
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 	FString reason;
 	Cast<AMonsterController>(GetController())->GetBrainComponent()->StopLogic(reason);
 	DungeonLevel->RemoveMonsterCharacters(this);
+
+	if (DungeonLevel->DungeonClear())
+		GetManager(UPlayerManager)->GetPlayableCharacter()->GetPlayerWidget()->PlayGameStateAnimation(true);
+
 	Destroy();
 }

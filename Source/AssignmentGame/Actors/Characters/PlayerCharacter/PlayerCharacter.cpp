@@ -97,7 +97,8 @@ void APlayerCharacter::SetHp(float value)
 
 void APlayerCharacter::OnCharacterDie()
 {
-	
+	Super::OnCharacterDie();
+	PlayerWidget->PlayGameStateAnimation(false);
 }
 
 void APlayerCharacter::InitializePlayer()
