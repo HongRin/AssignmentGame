@@ -41,4 +41,8 @@ public:
 	// È¹µæ µ·
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 DropMoney;
+
+	// ·¹º§
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 Level;
 };

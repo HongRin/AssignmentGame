@@ -57,7 +57,7 @@ void AMonsterCharacter::BeginPlay()
 	// À§Á¬ ¼ÂÆÃ
 	MonsterWidget->GetMonsterWidgetInstance()->InitializeWidget(this);
 	MonsterWidget->GetMonsterWidgetInstance()->SetNameText(MonsterInfo.MonsterName);
-	MonsterWidget->GetMonsterWidgetInstance()->SetLevelText(0);
+	MonsterWidget->GetMonsterWidgetInstance()->SetLevelText(MonsterInfo.Level);
 	MonsterWidget->GetMonsterWidgetInstance()->UpdateHp();
 
 	DungeonLevel = Cast<ADungeonLevel>(GetWorld()->GetLevelScriptActor());
