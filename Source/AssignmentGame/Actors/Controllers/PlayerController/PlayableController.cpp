@@ -20,6 +20,9 @@ void APlayableController::OnPossess(APawn* aPawn)
 	Super::OnPossess(aPawn); 
 
 	GetManager(UPlayerManager)->RegisterPlayer(Cast<APlayerCharacter>(aPawn), this);
+
+	SetInputMode(FInputModeGameOnly());
+	bShowMouseCursor = false;
 }
 
 void APlayableController::InputMouseX(float axis)

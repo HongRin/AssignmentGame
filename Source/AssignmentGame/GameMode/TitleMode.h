@@ -8,5 +8,4 @@ UCLASS()
 class ASSIGNMENTGAME_API ATitleMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };
