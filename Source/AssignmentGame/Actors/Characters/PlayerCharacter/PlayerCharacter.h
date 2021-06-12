@@ -64,6 +64,9 @@ private :
 	void InitializePlayer();
 
 public :
+	void LookatControlDirection();
+
+public :
 	FORCEINLINE class UMovementHelperComponent* GetMovementHelper()
 	{ return MovementHelper; }
 

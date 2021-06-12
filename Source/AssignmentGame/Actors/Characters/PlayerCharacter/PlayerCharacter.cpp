@@ -153,3 +153,11 @@ void APlayerCharacter::InitializePlayer()
 	PlayerAttack = CreateDefaultSubobject<UPlayerAttackComponent>(TEXT("PLAYER_ATTACK_COM"));
 #pragma endregion
 }
+
+void APlayerCharacter::LookatControlDirection()
+{
+	FRotator controlRotation = GetControlRotation();
+	controlRotation.Roll = controlRotation.Pitch = 0.0f;
+
+	SetActorRotation(controlRotation);
+}

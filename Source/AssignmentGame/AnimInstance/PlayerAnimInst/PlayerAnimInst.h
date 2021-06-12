@@ -28,4 +28,7 @@ private :
 
 	UFUNCTION()
 	void AnimNotify_AttackFin();
+
+	UFUNCTION()
+	void AnimNotify_UpdateRotation();
 };

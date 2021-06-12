@@ -3,7 +3,6 @@
 UPlayerDetectorComponent::UPlayerDetectorComponent()
 {
 	SphereRadius = 200.0f;
-	SetHiddenInGame(false);
 }
 
 void UPlayerDetectorComponent::BeginPlay()

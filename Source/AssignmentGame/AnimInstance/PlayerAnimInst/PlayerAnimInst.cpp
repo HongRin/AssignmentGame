@@ -25,3 +25,8 @@ void UPlayerAnimInst::AnimNotify_AttackFin()
 	if (Owner->GetPlayerAttack()->OnAttackFinished.IsBound())
 		Owner->GetPlayerAttack()->OnAttackFinished.Broadcast();
 }
+
+void UPlayerAnimInst::AnimNotify_UpdateRotation()
+{
+	Owner->LookatControlDirection();
+}

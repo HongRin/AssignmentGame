@@ -68,14 +68,17 @@ void ABullet::OnMonsterHit(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	if (OtherActor->ActorHasTag(TEXT("Monster")))
 	{
-		OtherActor->TakeDamage(
-			GetManager(UPlayerManager)->GetPlayerInfo()->Atk,
-			FDamageEvent(),
-			GetManager(UPlayerManager)->GetPlayableController(),
-			GetManager(UPlayerManager)->GetPlayableCharacter());
-		
-		SetCanRecyclable(true);
-		BulletMesh->SetHiddenInGame(true);
+		if (OtherComp == Cast<AMonsterCharacter>(OtherActor)->GetCapsuleComponent())
+		{
+			OtherActor->TakeDamage(
+				GetManager(UPlayerManager)->GetPlayerInfo()->Atk,
+				FDamageEvent(),
+				GetManager(UPlayerManager)->GetPlayableController(),
+				GetManager(UPlayerManager)->GetPlayableCharacter());
+
+			SetCanRecyclable(true);
+			BulletMesh->SetHiddenInGame(true);
+		}
 	}
 }
 
